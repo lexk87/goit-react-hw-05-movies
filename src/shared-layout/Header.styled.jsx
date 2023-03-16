@@ -8,6 +8,9 @@ export const AppHeader = styled.header`
     left: 0;
     width: 100%;
     background-color: #2d3035;
+    z-index: 999;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+        rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 `;
 
 export const Navigation = styled.nav`

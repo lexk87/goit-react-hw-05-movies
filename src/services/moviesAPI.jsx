@@ -14,7 +14,7 @@ const urls = {
 async function getMovieApi(url) {
     try {
         const response = await axios.get(url);
-        return response;
+        return response.data;
     } catch (error) {
         console.error(error);
     }
