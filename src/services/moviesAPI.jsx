@@ -24,7 +24,7 @@ export function getTrendingMovies() {
     return getMovieApi(`${urls.trendingMovies}api_key=${API_KEY}`);
 }
 
-export function getSearchedMovie(searchQuery) {
+export function getSearchedMovies(searchQuery) {
     return getMovieApi(
         `${urls.searchMovies}api_key=${API_KEY}&query=${searchQuery}`
     );

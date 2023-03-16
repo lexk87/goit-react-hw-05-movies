@@ -10,7 +10,7 @@ import noPhotoPlaceholder from '../../img/no-poster-placeholder.jpg';
 export const FilmsListItem = ({ id, title, poster }) => {
     return (
         <Item>
-            <ItemLink to={'/movies/${id}'}>
+            <ItemLink to={'/movies'}>
                 <ImgWrapper>
                     <Img
                         src={
