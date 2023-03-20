@@ -33,3 +33,14 @@ export const TxtBold = styled.span`
     font-size: 21px;
     font-weight: 700;
 `;
+
+export const NoReviews = styled.p`
+    color: lightgray;
+    font-weight: 700;
+    font-size: 21px;
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #2d3035;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+        rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+`;

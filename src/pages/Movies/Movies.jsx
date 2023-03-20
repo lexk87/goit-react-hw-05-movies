@@ -3,6 +3,8 @@ import { Main } from './Movies.styled';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchedMovies } from 'services';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Movies = () => {
     const [movies, setMovies] = useState(null);
@@ -21,9 +23,37 @@ const Movies = () => {
         const showSearchedMovies = async () => {
             try {
                 const res = await getSearchedMovies(searchedFilm);
+                if (res.results.length === 0) {
+                    toast.warn(
+                        'There are no movies matching your search request.',
+                        {
+                            position: 'top-center',
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: 'dark',
+                        }
+                    );
+                    return;
+                }
                 setMovies(res.results);
             } catch (error) {
-                console.log(error);
+                toast.error(
+                    'Oops... Something went wrong. Please, try to refresh the page.',
+                    {
+                        position: 'top-center',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'dark',
+                    }
+                );
             } finally {
                 setIsLoading(false);
             }
@@ -37,7 +67,16 @@ const Movies = () => {
         const searchQuery = e.target.elements.searchField.value;
 
         if (!searchQuery) {
-            console.log('Search request is empty');
+            toast.warn('Your search request is empty!', {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'dark',
+            });
             setSearchParams();
             return;
         }
@@ -52,6 +91,30 @@ const Movies = () => {
                 {isLoading && <Loader />}
                 {movies && <MoviesList movies={movies} />}
             </Container>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
         </Main>
     );
 };
