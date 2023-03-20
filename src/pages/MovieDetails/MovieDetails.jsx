@@ -60,9 +60,11 @@ const MovieDetails = () => {
     }, [movieId]);
 
     const { poster_path, title, vote_average, overview } = movieInfo;
-    // const { genres } = movieInfo;
+    const { genres } = movieInfo;
     const userScore = Math.round(vote_average * 10);
-    // const movieGenres = genres.map(genre => genre.name).join(' | ');
+    const movieGenres = genres.map(genre => genre.name).join(' | ');
+    // const movieGenres = (genres || []).map(genre => genre.name).join(' | ');
+    console.log('Genres:', genres);
 
     return (
         <Main>
@@ -89,8 +91,8 @@ const MovieDetails = () => {
                         <SubTitle>Overview</SubTitle>
                         <Txt>{overview ? overview : 'No info'}</Txt>
                         <SubTitle>Genres</SubTitle>
-                        <Txt>Action | Adventure | Comedy</Txt>
-                        {/* <Txt>{movieGenres}</Txt> */}
+                        {/* <Txt>Action | Adventure | Comedy</Txt> */}
+                        <Txt>{movieGenres}</Txt>
                         <LinksWrapper>
                             <MoreDetailsLink
                                 to="cast"
