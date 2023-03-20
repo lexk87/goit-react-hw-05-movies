@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Loader } from 'components';
 import {
     AppHeader,
     Navigation,
@@ -20,7 +19,7 @@ export const Header = () => {
                     <NavigationLink to="/movies">MOVIES</NavigationLink>
                 </Navigation>
             </AppHeader>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={null}>
                 <Outlet />
             </Suspense>
         </>

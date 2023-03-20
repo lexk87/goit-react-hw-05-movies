@@ -4,13 +4,16 @@ import {
     ImgWrapper,
     Img,
     ItemTitle,
-} from './FilmsListItem.styled';
+} from './MoviesListItem.styled';
 import noPhotoPlaceholder from '../../img/no-poster-placeholder.jpg';
+import { useLocation } from 'react-router-dom';
 
-export const FilmsListItem = ({ id, title, poster }) => {
+export const MoviesListItem = ({ id, title, poster }) => {
+    const location = useLocation();
+
     return (
         <Item>
-            <ItemLink to={'/movies'}>
+            <ItemLink to={`/movies/${id}`} state={{ from: location }}>
                 <ImgWrapper>
                     <Img
                         src={

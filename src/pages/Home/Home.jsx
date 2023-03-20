@@ -1,6 +1,6 @@
 import { Main, MainTitle } from './Home.styled';
 import { Container, Loader } from 'components';
-import { FilmsList } from 'components';
+import { MoviesList } from 'components';
 import { useState, useEffect } from 'react';
 import { getTrendingMovies } from 'services';
 
@@ -13,7 +13,6 @@ const Home = () => {
         const showTrendingMovies = async () => {
             try {
                 const res = await getTrendingMovies();
-                console.log(res);
                 setMovies(res.results);
             } catch (error) {
                 console.log(error);
@@ -30,7 +29,7 @@ const Home = () => {
             <Container>
                 <MainTitle>TRENDING TODAY</MainTitle>
                 {isLoading && <Loader />}
-                {movies && <FilmsList movies={movies} />}
+                {movies && <MoviesList movies={movies} />}
             </Container>
         </Main>
     );

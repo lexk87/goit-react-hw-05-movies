@@ -30,7 +30,7 @@ export const ItemLink = styled(Link)`
 
     &:hover Img,
     &:focus Img {
-        transform: scale(1.3);
+        transform: scale(1.2);
     }
 
     &:hover p,
@@ -49,6 +49,16 @@ export const Img = styled.img`
     width: 100%;
     height: auto;
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    object-fit: cover;
+    @media screen and (min-width: 480px) {
+        height: 260px;
+    }
+    @media screen and (min-width: 768px) {
+        height: 288px;
+    }
+    @media screen and (min-width: 1200px) {
+        height: 356px;
+    }
 `;
 
 export const ItemTitle = styled.p`

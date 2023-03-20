@@ -10,13 +10,16 @@ export const SearchFilmForm = styled.form`
 
 export const Input = styled.input`
     padding: 0 15px;
-    width: 300px;
+    width: calc(100% - 40px);
     height: 40px;
     outline: none;
     border: none;
     font-size: 18px;
     font-weight: 700;
     color: #2d3035;
+    @media screen and (min-width: 480px) {
+        width: 440px;
+    }
 `;
 
 export const Button = styled.button`

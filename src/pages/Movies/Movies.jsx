@@ -1,4 +1,4 @@
-import { Container, Loader, FilmsList, SearchForm } from 'components';
+import { Container, Loader, MoviesList, SearchForm } from 'components';
 import { Main } from './Movies.styled';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -8,7 +8,6 @@ const Movies = () => {
     const [movies, setMovies] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
-
     const searchedFilm = searchParams.get('title');
 
     useEffect(() => {
@@ -22,7 +21,6 @@ const Movies = () => {
         const showSearchedMovies = async () => {
             try {
                 const res = await getSearchedMovies(searchedFilm);
-                console.log(res);
                 setMovies(res.results);
             } catch (error) {
                 console.log(error);
@@ -39,7 +37,8 @@ const Movies = () => {
         const searchQuery = e.target.elements.searchField.value;
 
         if (!searchQuery) {
-            console.log('error');
+            console.log('Search request is empty');
+            setSearchParams();
             return;
         }
 
@@ -51,7 +50,7 @@ const Movies = () => {
             <Container>
                 <SearchForm onSubmit={handleSubmit} />
                 {isLoading && <Loader />}
-                {movies && <FilmsList movies={movies} />}
+                {movies && <MoviesList movies={movies} />}
             </Container>
         </Main>
     );
