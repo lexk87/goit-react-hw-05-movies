@@ -59,11 +59,20 @@ const MovieDetails = () => {
         showMovieDetails();
     }, [movieId]);
 
+    // useEffect(() => {
+    //     setIsLoading(true);
+
+    //     getMovieDetails(movieId)
+    //         .then(res => setMovieInfo(res))
+    //         .catch(error => console.log(error))
+    //         .finally(setIsLoading(false));
+    // }, [movieId]);
+
     const { poster_path, title, vote_average, overview } = movieInfo;
     const { genres } = movieInfo;
     const userScore = Math.round(vote_average * 10);
-    const movieGenres = genres.map(genre => genre.name).join(' | ');
-    // const movieGenres = (genres || []).map(genre => genre.name).join(' | ');
+    // const movieGenres = genres.map(genre => genre.name).join(' | ');
+    const movieGenres = (genres || []).map(genre => genre.name).join(' | ');
     console.log('Genres:', genres);
 
     return (
