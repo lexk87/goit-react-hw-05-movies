@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieActors } from 'services';
 import { Loader } from 'components';
-import noPhotoPlaceholder from '../../img/no-poster-placeholder.jpg';
+import noPhotoPlaceholder from '../../img/no-photo-placeholder.jpg';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -18,22 +18,21 @@ import {
 
 const Cast = () => {
     const { movieId } = useParams();
-    const [actors, setActors] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [actors, setActors] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
 
-        const showMovieActors = async () => {
-            try {
-                const res = await getMovieActors(movieId);
-                setActors(res.cast);
-            } catch (error) {
+        getMovieActors(movieId)
+            .then(res => setActors(res.cast))
+            .catch(error => {
+                console.log(error);
                 toast.error(
                     'Oops... Something went wrong. Please, try to refresh the page.',
                     {
                         position: 'top-center',
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -42,13 +41,13 @@ const Cast = () => {
                         theme: 'dark',
                     }
                 );
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        showMovieActors();
+            })
+            .finally(() => setIsLoading(false));
     }, [movieId]);
+
+    if (!actors) {
+        return <>{isLoading && <Loader />}</>;
+    }
 
     return (
         <>
@@ -84,7 +83,7 @@ const Cast = () => {
             )}
             <ToastContainer
                 position="top-center"
-                autoClose={5000}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

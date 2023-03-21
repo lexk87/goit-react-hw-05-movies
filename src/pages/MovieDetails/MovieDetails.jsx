@@ -25,7 +25,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const MovieDetails = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [movieInfo, setMovieInfo] = useState({});
+    const [movieInfo, setMovieInfo] = useState(null);
     const { movieId } = useParams();
     const location = useLocation();
     const backlink = location.state?.from ?? '/movies';
@@ -33,16 +33,15 @@ const MovieDetails = () => {
     useEffect(() => {
         setIsLoading(true);
 
-        const showMovieDetails = async () => {
-            try {
-                const res = await getMovieDetails(movieId);
-                setMovieInfo(res);
-            } catch (error) {
+        getMovieDetails(movieId)
+            .then(res => setMovieInfo(res))
+            .catch(error => {
+                console.log(error);
                 toast.error(
                     'Oops... Something went wrong. Please, try to refresh the page.',
                     {
                         position: 'top-center',
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -51,29 +50,18 @@ const MovieDetails = () => {
                         theme: 'dark',
                     }
                 );
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        showMovieDetails();
+            })
+            .finally(() => setIsLoading(false));
     }, [movieId]);
 
-    // useEffect(() => {
-    //     setIsLoading(true);
-
-    //     getMovieDetails(movieId)
-    //         .then(res => setMovieInfo(res))
-    //         .catch(error => console.log(error))
-    //         .finally(setIsLoading(false));
-    // }, [movieId]);
+    if (!movieInfo) {
+        return <>{isLoading && <Loader />}</>;
+    }
 
     const { poster_path, title, vote_average, overview } = movieInfo;
     const { genres } = movieInfo;
     const userScore = Math.round(vote_average * 10);
-    // const movieGenres = genres.map(genre => genre.name).join(' | ');
-    const movieGenres = (genres || []).map(genre => genre.name).join(' | ');
-    console.log('Genres:', genres);
+    const movieGenres = genres.map(genre => genre.name).join(' | ');
 
     return (
         <Main>
@@ -100,7 +88,6 @@ const MovieDetails = () => {
                         <SubTitle>Overview</SubTitle>
                         <Txt>{overview ? overview : 'No info'}</Txt>
                         <SubTitle>Genres</SubTitle>
-                        {/* <Txt>Action | Adventure | Comedy</Txt> */}
                         <Txt>{movieGenres}</Txt>
                         <LinksWrapper>
                             <MoreDetailsLink
@@ -124,7 +111,7 @@ const MovieDetails = () => {
             </Container>
             <ToastContainer
                 position="top-center"
-                autoClose={5000}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

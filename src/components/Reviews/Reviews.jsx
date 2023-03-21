@@ -14,22 +14,21 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Reviews = () => {
     const { movieId } = useParams();
-    const [reviews, setReviews] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [reviews, setReviews] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
 
-        const showMovieReviews = async () => {
-            try {
-                const res = await getMovieReviews(movieId);
-                setReviews(res.results);
-            } catch (error) {
+        getMovieReviews(movieId)
+            .then(res => setReviews(res.results))
+            .catch(error => {
+                console.log(error);
                 toast.error(
                     'Oops... Something went wrong. Please, try to refresh the page.',
                     {
                         position: 'top-center',
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -38,13 +37,13 @@ const Reviews = () => {
                         theme: 'dark',
                     }
                 );
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        showMovieReviews();
+            })
+            .finally(() => setIsLoading(false));
     }, [movieId]);
+
+    if (!reviews) {
+        return <>{isLoading && <Loader />}</>;
+    }
 
     return (
         <>
@@ -68,7 +67,7 @@ const Reviews = () => {
             )}
             <ToastContainer
                 position="top-center"
-                autoClose={5000}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

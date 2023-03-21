@@ -12,16 +12,16 @@ const Home = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        const showTrendingMovies = async () => {
-            try {
-                const res = await getTrendingMovies();
-                setMovies(res.results);
-            } catch (error) {
+
+        getTrendingMovies()
+            .then(res => setMovies(res.results))
+            .catch(error => {
+                console.log(error);
                 toast.error(
                     'Oops... Something went wrong. Please, try to refresh the page.',
                     {
                         position: 'top-center',
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -30,13 +30,13 @@ const Home = () => {
                         theme: 'dark',
                     }
                 );
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        showTrendingMovies();
+            })
+            .finally(() => setIsLoading(false));
     }, []);
+
+    if (!movies) {
+        return <>{isLoading && <Loader />}</>;
+    }
 
     return (
         <Main>
@@ -47,7 +47,7 @@ const Home = () => {
             </Container>
             <ToastContainer
                 position="top-center"
-                autoClose={5000}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

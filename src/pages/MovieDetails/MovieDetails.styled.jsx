@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export const Main = styled.main``;
 
@@ -114,7 +114,7 @@ export const LinksWrapper = styled.div`
     }
 `;
 
-export const MoreDetailsLink = styled(Link)`
+export const MoreDetailsLink = styled(NavLink)`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -128,6 +128,9 @@ export const MoreDetailsLink = styled(Link)`
     transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
     &:hover,
     &:focus {
+        color: green;
+    }
+    &.active {
         color: green;
     }
 `;

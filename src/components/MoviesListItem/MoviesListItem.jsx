@@ -7,6 +7,7 @@ import {
 } from './MoviesListItem.styled';
 import noPhotoPlaceholder from '../../img/no-poster-placeholder.jpg';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export const MoviesListItem = ({ id, title, poster }) => {
     const location = useLocation();
@@ -28,4 +29,10 @@ export const MoviesListItem = ({ id, title, poster }) => {
             </ItemLink>
         </Item>
     );
+};
+
+MoviesListItem.propTypes = {
+    id: PropTypes.number,
+    title: PropTypes.string,
+    poster: PropTypes.string,
 };

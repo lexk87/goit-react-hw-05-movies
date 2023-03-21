@@ -1,4 +1,5 @@
 import { SearchFilmForm, Input, Button, SearchIcon } from './SearchForm.styled';
+import PropTypes from 'prop-types';
 
 export const SearchForm = ({ onSubmit }) => {
     return (
@@ -9,4 +10,8 @@ export const SearchForm = ({ onSubmit }) => {
             </Button>
         </SearchFilmForm>
     );
+};
+
+SearchForm.propTypes = {
+    onSubmit: PropTypes.func,
 };

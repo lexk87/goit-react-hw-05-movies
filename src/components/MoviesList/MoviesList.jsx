@@ -1,5 +1,6 @@
 import { Films } from './MoviesList.styled';
 import { MoviesListItem } from 'components';
+import PropTypes from 'prop-types';
 
 export const MoviesList = ({ movies }) => {
     return (
@@ -14,4 +15,14 @@ export const MoviesList = ({ movies }) => {
             ))}
         </Films>
     );
+};
+
+MoviesList.propTypes = {
+    movies: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            title: PropTypes.string,
+            poster_path: PropTypes.string,
+        })
+    ),
 };

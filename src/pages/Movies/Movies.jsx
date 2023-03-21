@@ -19,16 +19,15 @@ const Movies = () => {
         }
 
         setIsLoading(true);
-
-        const showSearchedMovies = async () => {
-            try {
-                const res = await getSearchedMovies(searchedFilm);
-                if (res.results.length === 0) {
+        getSearchedMovies(searchedFilm)
+            .then(res => {
+                const fetchedData = res.results;
+                if (fetchedData.length === 0) {
                     toast.warn(
                         'There are no movies matching your search request.',
                         {
                             position: 'top-center',
-                            autoClose: 5000,
+                            autoClose: 3000,
                             hideProgressBar: false,
                             closeOnClick: true,
                             pauseOnHover: true,
@@ -39,13 +38,15 @@ const Movies = () => {
                     );
                     return;
                 }
-                setMovies(res.results);
-            } catch (error) {
+                setMovies(fetchedData);
+            })
+            .catch(error => {
+                console.log(error);
                 toast.error(
                     'Oops... Something went wrong. Please, try to refresh the page.',
                     {
                         position: 'top-center',
-                        autoClose: 5000,
+                        autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -54,12 +55,8 @@ const Movies = () => {
                         theme: 'dark',
                     }
                 );
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        showSearchedMovies();
+            })
+            .finally(() => setIsLoading(false));
     }, [searchedFilm]);
 
     const handleSubmit = e => {
@@ -69,7 +66,7 @@ const Movies = () => {
         if (!searchQuery) {
             toast.warn('Your search request is empty!', {
                 position: 'top-center',
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -84,6 +81,10 @@ const Movies = () => {
         setSearchParams({ title: searchQuery });
     };
 
+    // if (!movies) {
+    //     return <>{isLoading && <Loader />}</>;
+    // }
+
     return (
         <Main>
             <Container>
@@ -93,19 +94,7 @@ const Movies = () => {
             </Container>
             <ToastContainer
                 position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
-            />
-            <ToastContainer
-                position="top-center"
-                autoClose={5000}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
